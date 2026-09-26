@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+    
+    <meta 
+        name="description" 
+        content="Interactive Data Science and AI Portfolio"
+    >
+    
+    <meta 
+        name="theme-color" 
+        content="#07110c"
+    >
+    
+    <title>Saptarshi Basak</title>
+
+    
+    <!-- EXTERNAL FONTS & ICONS -->
+    <!-- =================================================================== -->
+    <link 
+        rel="preconnect" 
+        href="https://fonts.googleapis.com"
+    >
+    
+    <link 
+        rel="preconnect" 
+        href="https://fonts.gstatic.com" 
+        crossorigin
+    >
+    
+    
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" 
+        rel="stylesheet"
+    >
+    
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    
+    <!-- EXTERNAL LIBRARIES -->
+    <!-- =================================================================== -->
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    ></script>
+
+    
+    <!-- STYLESHEET LINK -->
+    <!-- =================================================================== -->
+    <link 
+        rel="stylesheet" 
+        href="style.css"
+    >
+</head>
+
+<body>
+    
+    
+    <!-- LOADING SCREEN -->
+    <!-- =================================================================== -->
+    <div id="loading-screen" aria-live="polite">
+        <div class="loader-container">
+            <div class="loader-symbol"></div>
+            <div class="loader-text">Loading portfolio.......</div>
+        </div>
+    </div>
+
+    
+    <!-- BACKGROUND EFFECTS & CANVASES -->
+    <!-- =================================================================== -->
+    <canvas id="three-background" aria-hidden="true"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div 
+        class="scroll-progress" 
+        id="scroll-progress" 
+        aria-hidden="true"
+    ></div>
+
+    <svg 
+        class="bg-decoration-svg absolute-top-left" 
+        width="400" 
+        height="400" 
+        viewBox="0 0 400 400" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        <circle 
+            cx="0" 
+            cy="0" 
+            r="300" 
+            stroke="rgba(201,170,104,0.03)" 
+            stroke-width="1"
+            stroke-dasharray="4 8"
+        />
+        <circle 
+            cx="0" 
+            cy="0" 
+            r="200" 
+            stroke="rgba(201,170,104,0.02)" 
+            stroke-width="1"
+        />
+    </svg>
+
+    <svg 
+        class="bg-decoration-svg absolute-bottom-right" 
+        width="500" 
+        height="500" 
+        viewBox="0 0 500 500" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        <path 
+            d="M500 0 L0 500" 
+            stroke="rgba(125,159,130,0.04)" 
+            stroke-width="1"
+        />
+        <path 
+            d="M500 100 L100 500" 
+            stroke="rgba(125,159,130,0.02)" 
+            stroke-width="1"
+        />
+    </svg>
+
+    
+    <!-- MAIN NAVIGATION BAR -->
+    <!-- =================================================================== -->
+    <header 
+        class="navbar" 
+        id="navbar"
+    >
+        <div class="navbar-inner">
+            
+            <a 
+                href="#home" 
+                class="brand" 
+                aria-label="Navigate to Home"
+            >
+                <span 
+                    class="brand-mark" 
+                    id="nav-initial"
+                ></span>
+                <span class="brand-name">Portfolio</span>
+            </a>
+            
+            <nav aria-label="Desktop Main Navigation">
+                <ul class="nav-links">
+                    <li>
+                        <a href="#home">Home</a>
+                    </li>
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li>
+                        <a href="#skills">Skills</a>
+                    </li>
+                    <li>
+                        <a href="#projects">Projects</a>
+                    </li>
+                    <li>
+                        <a href="#experience">Journey</a>
+                    </li>
+                    <li>
+                        <a href="#certificates">Certificates</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <button 
+                class="nav-menu-button" 
+                id="menu-button" 
+                aria-label="Toggle mobile navigation menu"
+                aria-expanded="false"
+            >
+                
+                <svg 
+                    width="24" 
+                    height="24" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path 
+                        d="M3 12H21" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round"
+                    />
+                    <path 
+                        d="M3 6H21" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round"
+                    />
+                    <path 
+                        d="M3 18H21" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </button>
+            
+        </div>
+    </header>
+
+    
+    <!-- MOBILE NAVIGATION OVERLAY -->
+    <!-- =================================================================== -->
+    <div 
+        class="mobile-menu" 
+        id="mobile-menu"
+        aria-hidden="true"
+    >
+        <nav aria-label="Mobile Main Navigation">
+            <ul class="mobile-menu-list">
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+                <li>
+                    <a href="#about">About</a>
+                </li>
+                <li>
+                    <a href="#skills">Skills</a>
+                </li>
+                <li>
+                    <a href="#projects">Projects</a>
+                </li>
+                <li>
+                    <a href="#experience">Journey</a>
+                </li>
+                <li>
+                    <a href="#certificates">Certificates</a>
+                </li>
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    <!-- MAIN CONTENT AREA -->
+    <!-- =================================================================== -->
+    <main>
+        
+        
+        <!-- 1. HERO SECTION -->
+        <!-- =============================================================== -->
+        <section 
+            class="section" 
+            id="home"
+        >
+            <div class="section-inner hero-inner-container">
+                <div class="hero-grid">
+                    
+                    
+                    <div class="hero-content reveal">
+                        
+                        <div class="hero-eyebrow">
+                            <span class="hero-eyebrow-line"></span> 
+                            <span id="hero-eyebrow-text"></span>
+                        </div>
+                        
+                        
+                        <h1 
+                            class="hero-title" 
+                            id="hero-main-title"
+                        ></h1>
+                        
+                        
+                        <p 
+                            class="hero-subtitle" 
+                            id="hero-subtitle"
+                        ></p>
+                        
+                        <!-- Action Buttons -->
+                        <div class="hero-actions">
+                            
+                            <a 
+                                href="#projects" 
+                                class="button primary magnetic"
+                            >
+                                <span 
+                                    class="button-text" 
+                                    id="hero-btn-explore"
+                                ></span>
+                                <span class="button-arrow">→</span>
+                            </a>
+                            
+                            <a 
+                                href="#" 
+                                id="hero-resume-btn" 
+                                download 
+                                class="button primary magnetic hero-resume-override"
+                            >
+                                <span 
+                                    class="button-text" 
+                                    id="hero-btn-resume"
+                                ></span>
+                                <span class="button-arrow">↓</span>
+                            </a>
+                            
+                            <a 
+                                href="#contact" 
+                                class="button magnetic"
+                            >
+                                <span 
+                                    class="button-text" 
+                                    id="hero-btn-contact"
+                                ></span>
+                                <span class="button-arrow">↗</span>
+                            </a>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div class="hero-visual reveal reveal-delay-2">
+                        
+                        
+                        <div class="hero-visual-wrapper">
+                            
+                            
+                            <div 
+                                id="hero-headline" 
+                                class="hero-right-headline"
+                            ></div>
+                            
+                            <div 
+                                class="profile-orbit" 
+                                id="profile-orbit"
+                            >
+                                
+                                <div class="orbit-ring"></div>
+                                <div class="orbit-ring second"></div>
+                                <div class="orbit-ring third"></div>
+                                
+                                <div 
+                                    class="profile-container tilt-enabled" 
+                                    id="profile-container"
+                                >
+                                    <img 
+                                        src="" 
+                                        alt="Profile Configuration Loading" 
+                                        class="profile-image" 
+                                        id="profile-image"
+                                    >
+                                    <div 
+                                        class="profile-placeholder" 
+                                        id="profile-placeholder"
+                                    >
+                                        Your photo
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-status">
+                                    <span class="status-dot"></span>
+                                    <span>Always learning</span>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="scroll-indicator">
+                <span>Scroll to explore</span>
+                <span class="scroll-line"></span>
+            </div>
+            
+        </section>
+
+        <!-- 2. ABOUT SECTION -->
+        <!-- =============================================================== -->
+        <section 
+            class="section" 
+            id="about"
+        >
+            <div class="section-glow" aria-hidden="true"></div>
+            
+            <div class="section-inner">
+                
+                <div class="section-heading reveal">
+                    <div 
+                        class="section-number" 
+                        id="about-num"
+                    ></div>
+                    <div>
+                        <h2 
+                            class="section-title" 
+                            id="about-title"
+                        ></h2>
+                        <p 
+                            class="section-description" 
+                            id="about-desc"
+                        ></p>
+                    </div>
+                </div>
+                
+                <div class="about-layout">
+                    
+                    <div class="about-quote reveal tilt-enabled">
+                        <p id="about-quote-text"></p>
+                        <span id="about-quote-label"></span>
+                    </div>
+                    
+                    <div class="about-text reveal reveal-delay-1">
+                        
+                        <p id="about-text-1"></p>
+                        <p id="about-text-2"></p>
+                        
+                       
+                        <div class="language-section">
+                            <h3 class="language-title">Language Proficiency</h3>
+                            <ul 
+                                id="language-list" 
+                                class="language-list"
+                            ></ul>
+                        </div>
+
+                        
+                        <div class="stats-grid">
+                            
+                            <div class="stat-card tilt-enabled">
+                                <div class="stat-value">01</div>
+                                <div class="stat-label">Living Portfolio</div>
+                            </div>
+                            
+                            <div class="stat-card tilt-enabled">
+                                <div class="stat-value">AI</div>
+                                <div class="stat-label">Core Interest</div>
+                            </div>
+                            
+                            <div class="stat-card tilt-enabled">
+                                <div class="stat-value">∞</div>
+                                <div class="stat-label">Room to Learn</div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+
+        
+        <!-- 3. SKILLS SECTION -->
+        <!-- =============================================================== -->
+        <section 
+            class="section" 
+            id="skills"
+        >
+            <div class="section-inner">
+                
+                <div class="section-heading reveal">
+                    <div 
+                        class="section-number" 
+                        id="skills-num"
+                    ></div>
+                    <div>
+                        <h2 
+                            class="section-title" 
+                            id="skills-title"
+                        ></h2>
+                        <p 
+                            class="section-description" 
+                            id="skills-desc"
+                        ></p>
+                    </div>
+                </div>
+                
+                
+                <div class="marquee-wrapper reveal">
+                    <div 
+                        class="marquee-content" 
+                        id="skill-cloud-1"
+                    ></div>
+                    
+                    <div 
+                        class="marquee-content" 
+                        id="skill-cloud-2" 
+                        aria-hidden="true"
+                    ></div>
+                </div>
+                
+            </div>
+            
+        </section>
+
+        
+        <!-- 4. PROJECTS SECTION -->
+        <!-- =============================================================== -->
+        <section 
+            class="section" 
+            id="projects"
+        >
+            <div class="section-glow" aria-hidden="true"></div>
+            
+            <div class="section-inner">
+                
+                <div class="section-heading reveal">
+                    <div 
+                        class="section-number" 
+                        id="projects-num"
+                    ></div>
+                    <div>
+                        <h2 
+                            class="section-title" 
+                            id="projects-title"
+                        ></h2>
+                        <p 
+                            class="section-description" 
+                            id="projects-desc"
+                        ></p>
+                    </div>
+                </div>
+                
+                
+                <div 
+                    id="project-container" 
+                    class="reveal"
+                ></div>
+                
+            </div>
+            
+        </section>
+
+        
+        <!-- 5. JOURNEY (EXPERIENCE) SECTION -->
+        <!-- =============================================================== -->
+        <section 
+            class="section" 
+            id="experience"
+        >
+            <div class="section-inner">
+                
+                <div class="section-heading reveal">
+                    <div 
+                        class="section-number" 
+                        id="journey-num"
+                    ></div>
+                    <div>
+                        <h2 
+                            class="section-title" 
+                            id="journey-title"
+                        ></h2>
+                        <p 
+                            class="section-description" 
+                            id="journey-desc"
+                        ></p>
+                    </div>
+                </div>
+                
+                
+                <div 
+                    class="timeline" 
+                    id="experience-container"
+                ></div>
+                
+            </div>
+            
+        </section>
+
+        
+        <!-- 6. CERTIFICATES SECTION -->
+        <!-- =============================================================== -->
+        <section 
+            class="section" 
+            id="certificates"
+        >
+            <div class="section-glow" aria-hidden="true"></div>
+            
+            <div class="section-inner">
+                
+                <div class="section-heading reveal">
+                    <div 
+                        class="section-number" 
+                        id="certs-num"
+                    ></div>
+                    <div>
+                        <h2 
+                            class="section-title" 
+                            id="certs-title"
+                        ></h2>
+                        <p 
+                            class="section-description" 
+                            id="certs-desc"
+                        ></p>
+                    </div>
+                </div>
+                
+                <div 
+                    id="certificate-container" 
+                    class="reveal"
+                ></div>
+                
+            </div>
+            
+        </section>
+
+        
+        <!-- 7. CONTACT SECTION -->
+        <!-- =============================================================== -->
+        <section 
+            class="section" 
+            id="contact"
+        >
+            <div class="section-inner">
+                
+                <div class="contact-panel reveal tilt-enabled">
+                    
+                    <div 
+                        class="contact-title" 
+                        id="contact-title"
+                    ></div>
+                    
+                    <p 
+                        class="contact-text" 
+                        id="contact-desc"
+                    ></p>
+                    
+                    <div 
+                        class="social-links" 
+                        id="social-links"
+                    ></div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+        
+    </main>
+
+    <!-- =================================================================== -->
+    <!-- FOOTER -->
+    <!-- =================================================================== -->
+    <footer>
+        <div class="footer-inner">
+            <span>
+                © <span id="footer-year"></span> Portfolio
+            </span>
+            <span>
+                Built with curiosity · Data · AI
+            </span>
+        </div>
+    </footer>
+
+    <!-- =================================================================== -->
+    <!-- OVERLAY MODALS -->
+    <!-- =================================================================== -->
+    
+    <!-- PROJECT MODAL -->
+    <div 
+        class="project-modal" 
+        id="project-modal" 
+        aria-hidden="true"
+        role="dialog"
+        aria-labelledby="modal-project-title"
+    >
+        <div 
+            class="project-modal-content" 
+            id="project-modal-content"
+        >
+            <button 
+                class="modal-close" 
+                id="project-modal-close" 
+                aria-label="Close project window"
+            >
+                
+                <svg 
+                    width="20" 
+                    height="20" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    stroke-width="2"
+                >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div 
+                class="modal-project-number" 
+                id="modal-project-number"
+            >
+                Project
+            </div>
+            
+            <h2 
+                class="modal-project-title" 
+                id="modal-project-title"
+            ></h2>
+            
+            <p 
+                class="modal-project-description" 
+                id="modal-project-description"
+            ></p>
+            
+            <div 
+                class="project-tags" 
+                id="modal-project-tags"
+            ></div>
+            
+            <div 
+                class="modal-project-actions" 
+                id="modal-project-actions"
+            ></div>
+            
+            
+            <div 
+                class="modal-data-grid" 
+                id="modal-data-grid"
+            ></div>
+            
+        </div>
+    </div>
+
+    <!-- CERTIFICATE VIEWER MODAL -->
+    <div 
+        class="certificate-modal" 
+        id="certificate-modal" 
+        aria-hidden="true"
+        role="dialog"
+    >
+        <div class="modal-content">
+            
+            <button 
+                class="modal-close" 
+                id="certificate-modal-close" 
+                aria-label="Close certificate viewer"
+            >
+               
+                <svg 
+                    width="20" 
+                    height="20" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    stroke-width="2"
+                >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div 
+                id="certificate-viewer" 
+                style="width:100%;height:100%;"
+            ></div>
+            
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- JAVASCRIPT EXECUTABLES -->
+    <!-- =================================================================== -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    
+</body>
+</html>
