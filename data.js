@@ -119,9 +119,6 @@ const PORTFOLIO_DATA = {
         btnExplore: 
             "Explore my work",
             
-        btnResume: 
-            "Download Resume (PDF)",
-            
         btnContact: 
             "Get in touch"
             
