@@ -1,4 +1,4 @@
-# Saptarshi Basak - Personal Portfolio
+# Saptarshi Basak - Portfolio Webpage
 
 A responsive and interactive personal portfolio website designed to showcase my resume, skills, and projects as a Data Science and Artificial Intelligence student at IIT Guwahati. 
 
