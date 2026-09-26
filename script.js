@@ -50,7 +50,10 @@ function populateStaticContent() {
     if (btnExplore) btnExplore.textContent = PORTFOLIO_DATA.hero.btnExplore;
 
     const btnResume = document.getElementById("hero-btn-resume");
-    if (btnResume) btnResume.textContent = PORTFOLIO_DATA.hero.btnResume;
+    if (btnResume) {
+        btnResume.textContent = PORTFOLIO_DATA.hero.btnResume;
+        btnResume.style.display = "none"; // Hides the text container
+    }
 
     const btnContact = document.getElementById("hero-btn-contact");
     if (btnContact) btnContact.textContent = PORTFOLIO_DATA.hero.btnContact;
@@ -58,6 +61,7 @@ function populateStaticContent() {
     const resumeBtnElement = document.getElementById("hero-resume-btn");
     if (resumeBtnElement) {
         resumeBtnElement.href = PORTFOLIO_DATA.personal.resume || "#";
+        resumeBtnElement.style.display = "none"; // Hides the actual button element
     }
     
 
