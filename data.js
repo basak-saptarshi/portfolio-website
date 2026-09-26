@@ -32,9 +32,6 @@ const PORTFOLIO_DATA = {
         profileImage: 
             "media/profile.png",
         
-        // The path to your downloadable PDF resume in the media folder.
-        resume: 
-            "media/resume.pdf"
         
     },
 
